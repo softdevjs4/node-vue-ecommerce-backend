@@ -4,6 +4,10 @@ const _ = require('lodash');
 const express = require('express');
 const router = express.Router();
 
+// Middlewares
+const auth = require('../../../middlewares/admin/auth');
+const admin = require('../../../middlewares/admin/admin');
+
 // Helpers
 const { generateJwtToken } = require('../../../helpers/jwt_access_token');
 
@@ -87,7 +91,7 @@ router.post('/register', (req, res) => {
             user.password = hash;
             // Store user to DB
             user.save()
-              .then(user => res.status(201).json(_.pick(user, ["_id", "name", "email"])))
+              .then(user => res.status(201).json(_.pick(user, ["_id", "name", "email", "isAdmin","status"])))
               .catch(err => {
                 res.status(400).json({ "error": "Something error!" });
                 dbDebugger(err)
@@ -102,8 +106,11 @@ router.post('/register', (req, res) => {
     });
 });
 
-
-
-
+// @route  GET /api/admin/me
+// @des    Login admin info
+// @access Private
+router.get('/me',[auth, admin], (req, res)=>{
+  res.status(200).json(_.pick(req.user, ["_id", "name", "email", "isAdmin",  "status"]));
+});
 
 module.exports = router;

@@ -1,3 +1,4 @@
+const passport = require("passport");
 const config = require('config');
 const startupDebugger = require('debug')('app:startup');
 const dbDebugger = require('debug')('app:db');
@@ -17,7 +18,14 @@ mongoose.connect(config.get('mongoURI'), { useNewUrlParser: true })
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+// Helmet
 app.use(helmet());
+
+// Passport middleware
+app.use(passport.initialize());
+
+// Passport Config
+require("./util/passport")(passport);
 
 // Helper for development environment
 if (app.get('env') == 'development') {
