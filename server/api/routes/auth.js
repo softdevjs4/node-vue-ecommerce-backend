@@ -5,21 +5,21 @@ const express = require('express');
 const router = express.Router();
 
 // Middlewares
-const auth = require('../../../middlewares/admin/auth');
-const admin = require('../../../middlewares/admin/admin');
+const auth = require('../../middlewares/auth');
+const admin = require('../../middlewares/admin');
 
 // Helpers
-const { generateJwtToken } = require('../../../helpers/jwt_access_token');
+const { generateJwtToken } = require('../../helpers/jwt_access_token');
 
 // Validatins
-const validateRegisterInput = require('../../../validations/admin/register')
-const validateLoginInput = require('../../../validations/admin/login')
+const validateRegisterInput = require('../../validations/register');
+const validateLoginInput = require('../../validations/login');
 
 // Models
-const User = require('../../../models/admin/user');
+const User = require('../../models/user');
 
-// @route  POST /api/admin/login
-// @des    Admin login
+// @route  POST /api/login
+// @des    User login
 // @access Public
 router.post('/login', (req, res) => {
   // Validate user input
@@ -66,8 +66,8 @@ router.post('/login', (req, res) => {
     .catch(err => res.status(404).json({ email: "Email or password incorrect!" }));
 });
 
-// @route  Post /api/admin/register
-// @des    Admin register
+// @route  Post /api/register
+// @des    User register
 // @access Public
 router.post('/register', (req, res) => {
   // Validate user input
@@ -106,8 +106,8 @@ router.post('/register', (req, res) => {
     });
 });
 
-// @route  GET /api/admin/me
-// @des    Login admin info
+// @route  GET /api/me
+// @des    Login user info
 // @access Private
 router.get('/me',[auth, admin], (req, res)=>{
   res.status(200).json(_.pick(req.user, ["_id", "name", "email", "isAdmin",  "status"]));
