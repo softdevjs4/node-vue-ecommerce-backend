@@ -4,14 +4,19 @@
     <form>
       <label for="">Email</label>
       <input type="text" v-model="email">
+      <small v-if="isError">{{errors.email}}</small>
       <label for="">Password</label>
       <input type="password" v-model="password">
+      <small v-if="isError">{{errors.password}}</small>
       <button @click="login">Login</button>
+      
     </form>
   </div>
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
+
 export default {
   name: 'LoginUser',
   data(){
@@ -19,6 +24,12 @@ export default {
       email: '',
       password: ''
     }
+  },
+  computed: {
+    ...mapGetters({
+      errors: 'auth/getErrors',
+      isError: 'auth/isError'
+    })
   },
   methods: {
     login(e){

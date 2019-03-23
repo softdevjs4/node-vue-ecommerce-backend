@@ -1,8 +1,5 @@
 // initial state
-const state = {
-  user: {},
-  isLoggedIn: false
-}
+const state = {}
 
 // getters
 const getters = {}

@@ -1,29 +1,48 @@
 import router from '../../router'
+import Vue from 'vue'
 // initial state
 const state = {
   user: {},
-  isLoggedIn: false
+  isLoggedIn: false,
+  errors: {},
+  isError: false
 }
 
 // getters
-const getters = {}
+const getters = {
+  isError(state){
+    return state.isError
+  },
+  getErrors(state){
+    return state.errors
+  }
+}
 
 // actions
 const actions = {
   login({commit}, payload){
-    if(payload.email == 'ahadcr0@gmail.com'){
-      commit('setLoginUser', {name:'Mir HB Rahman', email: 'ahadcr0@gmail.com'})
-      console.log('Login successfull')
-      router.push('/')
-    }else{
-      console.log('Login fail')
-    }
+    Vue.axios.post('/login', payload)
+      .then(response=>{
+        if(response.data.success){
+          commit('loginUser', response.data.user)
+          // set token to local storage
+          localStorage.setItem('jwt', response.data.token)
+          router.push('/')
+        }
+      })
+      .catch(err=>{
+        commit('setErrors', err.response.data)
+      })
   }
 }
 
 // mutations
 const mutations = {
-  setLoginUser(state, user){
+  setErrors(state, errors){
+    state.errors = errors
+    state.isError = true
+  },
+  loginUser(state, user){
     state.user = user
     state.isLoggedIn = true
   }

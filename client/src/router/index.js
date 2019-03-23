@@ -5,7 +5,7 @@ import HelloWorld from '@/components/HelloWorld'
 
 Vue.use(Router)
 
-export default new Router({
+let router = new Router({
   mode: 'history',
   routes: [
     {
@@ -16,7 +16,15 @@ export default new Router({
     {
       path: '/login',
       name: 'LoginUser',
-      component: LoginUser
+      component: LoginUser,
+      meta: {
+        guest: true
+      }
     }
   ]
 })
+
+// check route meta
+require('./metaCheck')(router)
+
+export default router
