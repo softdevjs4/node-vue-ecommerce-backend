@@ -7,6 +7,9 @@ import router from './router'
 import store from './store'
 import jwtDecode from 'vue-jwt-decode'
 import setAuthToken from './utils/setAuthToken'
+import Vuetify from 'vuetify'
+
+Vue.use(Vuetify)
 
 Vue.config.productionTip = false
 

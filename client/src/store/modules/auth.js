@@ -25,7 +25,7 @@ const actions = {
       .then(response => {
         if (response.data.success) {
           commit('loginUser', response.data.user)
-          // set token to local storage
+          // Set token to local storage
           localStorage.setItem('jwt', response.data.token)
           router.push({name: 'userDashboard'})
         }
@@ -52,6 +52,9 @@ const mutations = {
   loginUser (state, user) {
     state.user = user
     state.isLoggedIn = true
+    // Clear error
+    state.isError = false
+    state.errors = {}
   },
   clearCurrentUser (state) {
     state.user = null

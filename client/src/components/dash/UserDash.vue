@@ -1,16 +1,16 @@
 <template>
-  <div>
-    <h2>My Dashboard</h2>
-  </div>
+  <app-layout>
+   <div slot="content">
+      <h3 class="primary--text">Dashboard</h3>
+    </div>
+  </app-layout>
 </template>
 
 <script>
-import Vue from 'vue'
+import AppLayout from '../layouts/AppLayout'
 export default {
-  created () {
-    Vue.axios.get('/admin/me')
-      .then(res => console.log(res.data))
-      .catch(err => console.log(err.response.data))
+  components: {
+    AppLayout
   }
 }
 </script>
