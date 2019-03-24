@@ -5,21 +5,21 @@ const express = require('express');
 const router = express.Router();
 
 // Middlewares
-const auth = require('../../middlewares/auth');
-const admin = require('../../middlewares/admin');
+const auth = require('../../../middlewares/admin/auth');
+const admin = require('../../../middlewares/admin/admin');
 
 // Helpers
-const { generateJwtToken } = require('../../helpers/jwt_access_token');
+const { generateJwtToken } = require('../../../helpers/jwt_access_token');
 
 // Validatins
-const validateRegisterInput = require('../../validations/register');
-const validateLoginInput = require('../../validations/login');
+const validateRegisterInput = require('../../../validations/admin/register');
+const validateLoginInput = require('../../../validations/admin/login');
 
 // Models
-const User = require('../../models/user');
+const User = require('../../../models/admin/user');
 
-// @route  POST /api/login
-// @des    User login
+// @route  POST /api/admin/login
+// @des    Admin login
 // @access Public
 router.post('/login', (req, res) => {
   // Validate user input
@@ -50,7 +50,8 @@ router.post('/login', (req, res) => {
                 if (token) {
                   return res.status(200).json({
                     success: true,
-                    token: "Bearer " + token
+                    token: "Bearer " + token,
+                    user: payload
                   });
                 } else {
                   throw new Error();
@@ -60,14 +61,14 @@ router.post('/login', (req, res) => {
               throw new Error();
             }
           })
-          .catch(err => res.status(404).json({ email: "Email or password incorrect!" }))
+          .catch(err => res.status(404).json({ error: true, email: "Email or password incorrect!" }))
       }
     })
-    .catch(err => res.status(404).json({ email: "Email or password incorrect!" }));
+    .catch(err => res.status(404).json({ error: true, email: "Email or password incorrect!" }));
 });
 
-// @route  Post /api/register
-// @des    User register
+// @route  Post /api/admin/register
+// @des    Admin register
 // @access Public
 router.post('/register', (req, res) => {
   // Validate user input

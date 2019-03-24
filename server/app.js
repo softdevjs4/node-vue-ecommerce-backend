@@ -33,6 +33,16 @@ if (app.get('env') == 'development') {
   startupDebugger('Morgan enable...');
 }
 
+// CORS middleware
+const allowCrossDomain = function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', '*');
+  res.header('Access-Control-Allow-Headers', '*');
+  next();
+}
+
+app.use(allowCrossDomain)
+
 // All routes
 require('./api/index')(app);
 

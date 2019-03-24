@@ -1,6 +1,7 @@
-const auth = require('./routes/auth');
+const auth = require('./routes/admin/auth');
 
 module.exports = (app)=>{
-  // User auth
-  app.use('/api', auth);
+  // All admin routes
+  // Admin auth
+  app.use('/api/admin', auth);
 }
