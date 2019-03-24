@@ -9,7 +9,6 @@
       <input type="password" v-model="password">
       <small v-if="isError">{{errors.password}}</small>
       <button @click="login">Login</button>
-      
     </form>
   </div>
 </template>
@@ -19,7 +18,7 @@ import {mapGetters} from 'vuex'
 
 export default {
   name: 'LoginUser',
-  data(){
+  data () {
     return {
       email: '',
       password: ''
@@ -32,12 +31,12 @@ export default {
     })
   },
   methods: {
-    login(e){
+    login (e) {
       e.preventDefault()
       let payload = {
-          email: this.email,
-          password: this.password
-        }
+        email: this.email,
+        password: this.password
+      }
       this.$store.dispatch('auth/login', payload)
     }
   }
