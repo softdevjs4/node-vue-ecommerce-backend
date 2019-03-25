@@ -12,10 +12,10 @@ const admin = require('../../../middlewares/admin/admin');
 const { generateJwtToken } = require('../../../helpers/jwt_access_token');
 
 // Validatins
-const validateRegisterInput = require('../../../validations/admin/register');
-const validateLoginInput = require('../../../validations/admin/login');
+const validateRegisterInput = require('../../../validations/admin/auth/register');
+const validateLoginInput = require('../../../validations/admin/auth/login');
 
-// Models
+// Model
 const User = require('../../../models/admin/user');
 
 // @route  POST /api/admin/login
@@ -107,8 +107,8 @@ router.post('/register', (req, res) => {
     });
 });
 
-// @route  GET /api/me
-// @des    Login user info
+// @route  GET /api/admin/me
+// @des    Admin user info
 // @access Private
 router.get('/me',[auth, admin], (req, res)=>{
   res.status(200).json(_.pick(req.user, ["_id", "name", "email", "isAdmin",  "status"]));
