@@ -58,7 +58,7 @@ router.post('/', [auth, admin], (req, res) => {
   ProductCategory.findOne({ name: catName })
     .then(cat => {
       if (cat) {
-        return res.status(409).json({ error: "Category already exist!" });
+        return res.status(409).json({ name: "Category already exist!" });
       } else {
         // Create new category
         const newCategory = new ProductCategory({

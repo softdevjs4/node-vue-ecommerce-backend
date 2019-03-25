@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import LoginUser from '@/components/auth/LoginUser'
 import UserDash from '@/components/dash/UserDash'
+import ProductCategoryList from '@/components/product/category/ProductCategoryList'
 import HelloWorld from '@/components/HelloWorld'
 
 Vue.use(Router)
@@ -15,6 +16,14 @@ let router = new Router({
       component: HelloWorld
     },
     {
+      path: '/login',
+      name: 'loginUser',
+      component: LoginUser,
+      meta: {
+        guest: true
+      }
+    },
+    {
       path: '/dashboard',
       name: 'userDashboard',
       component: UserDash,
@@ -23,11 +32,11 @@ let router = new Router({
       }
     },
     {
-      path: '/login',
-      name: 'loginUser',
-      component: LoginUser,
+      path: '/product/categories',
+      name: 'productCategoryList',
+      component: ProductCategoryList,
       meta: {
-        guest: true
+        requiresAuth: true
       }
     }
   ]
