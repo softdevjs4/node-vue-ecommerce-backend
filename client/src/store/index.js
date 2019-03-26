@@ -1,9 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import error from './modules/error'
-import loader from './modules/loader'
-import auth from './modules/auth'
-import user from './modules/user'
+import error from './modules/utils/error'
+import loader from './modules/utils/loader'
+import auth from './modules/auth/auth'
 import productCategory from './modules/product/category'
 
 Vue.use(Vuex)
@@ -13,7 +12,6 @@ export default new Vuex.Store({
     error,
     loader,
     auth,
-    user,
     productCategory
   }
 })

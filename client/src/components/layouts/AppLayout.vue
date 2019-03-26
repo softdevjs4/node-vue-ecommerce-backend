@@ -25,12 +25,12 @@
                 </v-list-tile-content>
               </v-list-tile>
             </template>
-            <v-list-tile v-for="(child, i) in item.children" :key="i">
+            <v-list-tile v-for="(child, i) in item.children" :key="i" @click="menuAction(child.title)">
               <v-list-tile-action v-if="child.icon">
                 <v-icon>{{ child.icon }}</v-icon>
               </v-list-tile-action>
               <v-list-tile-content>
-                <v-list-tile-title>{{ child.text }}</v-list-tile-title>
+                <v-list-tile-title >{{ child.text }}</v-list-tile-title>
               </v-list-tile-content>
             </v-list-tile>
           </v-list-group>
@@ -89,14 +89,14 @@ export default {
     drawer: null,
     items: [
       { icon: 'home', text: 'Dashboard', title: 'userDashboard' },
-      { icon: 'work', text: 'Product Category', title: 'productCategory' },
-      { icon: 'content_copy', text: 'Duplicates' },
       {
         icon: 'keyboard_arrow_up',
         'icon-alt': 'keyboard_arrow_down',
-        text: 'Labels',
-        model: true,
-        children: [{ icon: 'add', text: 'Create label' }]
+        text: 'Product Section',
+        model: false,
+        children: [
+          { icon: 'work', text: 'Product Category', title: 'productCategory' }
+        ]
       },
       {
         icon: 'keyboard_arrow_up',

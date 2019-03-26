@@ -1,4 +1,4 @@
-import router from '../../router'
+import router from '../../../router'
 import Vue from 'vue'
 // initial state
 const state = {
