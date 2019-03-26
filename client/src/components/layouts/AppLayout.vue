@@ -88,8 +88,8 @@ export default {
   data: () => ({
     drawer: null,
     items: [
+      { icon: 'home', text: 'Dashboard', title: 'userDashboard' },
       { icon: 'work', text: 'Product Category', title: 'productCategory' },
-      { icon: 'history', text: 'Frequently contacted' },
       { icon: 'content_copy', text: 'Duplicates' },
       {
         icon: 'keyboard_arrow_up',
@@ -123,7 +123,9 @@ export default {
   },
   methods: {
     menuAction (title) {
-      if (title === 'productCategory') {
+      if (title === 'userDashboard') {
+        router.push({name: 'userDashboard'})
+      } else if (title === 'productCategory') {
         router.push({name: 'productCategoryList'})
       } else if (title === 'logout') {
         this.$store.dispatch('auth/logout')
