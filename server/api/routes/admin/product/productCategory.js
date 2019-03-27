@@ -41,7 +41,7 @@ router.get('/:id', [auth, admin], (req, res) => {
       // No category found
       if (!cat) return res.status(404).json({ success: false, error: 'No data found!' });
 
-      return res.status(200).json({ success: true, 'categories': cat });
+      return res.status(200).json({ success: true, 'category': cat });
     })
     .catch(err => somethinError(res, err));
 });

@@ -8,6 +8,8 @@ import store from './store'
 import jwtDecode from 'vue-jwt-decode'
 import setAuthToken from './utils/setAuthToken'
 
+Vue.use(require('vue-moment'))
+
 Vue.config.productionTip = false
 
 // Setup axios to be available globally through Vue

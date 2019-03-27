@@ -18,7 +18,7 @@
             <v-data-table :headers="headers" :items="categories" :search="search">
               <template v-slot:items="props">
                 <td class="text-lg-left">{{ props.item.name }}</td>
-                <td class="text-lg-left">{{ props.item.created_at }}</td>
+                <td class="text-lg-left">{{ props.item.created_at | moment("dddd, MMMM Do YYYY") }}</td>
                 <td class="text-lg-left">
                   <v-layout row wrap>
                     <v-flex sm6>

@@ -95,7 +95,7 @@ export default {
         text: 'Product Section',
         model: false,
         children: [
-          { icon: 'work', text: 'Product Category', title: 'productCategory' }
+          { icon: 'view_list', text: 'Product Category', title: 'productCategory' }
         ]
       },
       {
