@@ -4,6 +4,7 @@ import error from './modules/utils/error'
 import loader from './modules/utils/loader'
 import auth from './modules/auth/auth'
 import productCategory from './modules/product/category'
+import productSubCategory from './modules/product/subCategory'
 
 Vue.use(Vuex)
 
@@ -12,6 +13,7 @@ export default new Vuex.Store({
     error,
     loader,
     auth,
-    productCategory
+    productCategory,
+    productSubCategory
   }
 })

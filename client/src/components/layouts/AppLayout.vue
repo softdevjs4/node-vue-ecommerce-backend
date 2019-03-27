@@ -95,7 +95,8 @@ export default {
         text: 'Product Section',
         model: false,
         children: [
-          { icon: 'view_list', text: 'Product Category', title: 'productCategory' }
+          { icon: 'view_list', text: 'Product Category', title: 'productCategory' },
+          { icon: 'view_list', text: 'Product Sub Category', title: 'productSubCategory' }
         ]
       },
       {
@@ -127,6 +128,8 @@ export default {
         router.push({name: 'userDashboard'})
       } else if (title === 'productCategory') {
         router.push({name: 'productCategoryList'})
+      } else if (title === 'productSubCategory') {
+        router.push({name: 'productSubCategoryList'})
       } else if (title === 'logout') {
         this.$store.dispatch('auth/logout')
       }

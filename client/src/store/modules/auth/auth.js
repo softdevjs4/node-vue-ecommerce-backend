@@ -1,4 +1,5 @@
 import router from '../../../router'
+import setAuthToken from '../../../utils/setAuthToken'
 import Vue from 'vue'
 // initial state
 const state = {
@@ -27,6 +28,8 @@ const actions = {
           commit('loginUser', response.data.user)
           // Set token to local storage
           localStorage.setItem('jwt', response.data.token)
+          // Set auth token to header auth
+          setAuthToken(localStorage.getItem('jwt'))
           router.push({name: 'userDashboard'})
         }
       })

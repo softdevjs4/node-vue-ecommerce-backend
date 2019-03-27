@@ -70,7 +70,15 @@ router.post('/', [auth, admin], (req, res) => {
         });
         // Save to DB
         newSubCategory.save()
-          .then(cat => res.status(201).json({ success: true, subCategory: cat }))
+          .then(subCat => {
+            // Return sub category with category details
+            ProductSubCategory.findById(subCat._id)
+              .populate('category')
+              .then(subCat=>{
+                res.status(201).json({ success: true, subCategory: subCat })
+              })
+              .catch(err => somethinError(res));
+          })
           .catch(err => somethinError(res));
       }
     })
@@ -98,7 +106,15 @@ router.put('/:id', [auth, admin], (req, res) => {
         subCat.slug = slugify(subCatName);
         // Save to DB
         subCat.save()
-          .then(subCat => res.status(200).json({ success: true, subCategory: subCat }))
+          .then(subCat => {
+            // Return sub category with category details
+            ProductSubCategory.findById(subCat._id)
+              .populate('category')
+              .then(subCat=>{
+                res.status(201).json({ success: true, subCategory: subCat })
+              })
+              .catch(err => somethinError(res));
+          })
           .catch(err => somethinError(res));
       }
     })
