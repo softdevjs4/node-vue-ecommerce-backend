@@ -5,6 +5,7 @@ import loader from './modules/utils/loader'
 import auth from './modules/auth/auth'
 import productCategory from './modules/product/category'
 import productSubCategory from './modules/product/subCategory'
+import productOptionGroup from './modules/product/optionGroup'
 
 Vue.use(Vuex)
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
     loader,
     auth,
     productCategory,
-    productSubCategory
+    productSubCategory,
+    productOptionGroup
   }
 })

@@ -4,6 +4,7 @@ import LoginUser from '@/components/auth/LoginUser'
 import UserDash from '@/components/dash/UserDash'
 import ProductCategoryList from '@/components/product/section/ProductCategoryList'
 import ProductSubCategoryList from '@/components/product/section/ProductSubCategoryList'
+import ProductOptionGroup from '@/components/product/option/ProductOptionGroupList'
 import HelloWorld from '@/components/HelloWorld'
 
 Vue.use(Router)
@@ -44,6 +45,14 @@ let router = new Router({
       path: '/product/sub-categories',
       name: 'productSubCategoryList',
       component: ProductSubCategoryList,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/product/option-groups',
+      name: 'productOptionGroupList',
+      component: ProductOptionGroup,
       meta: {
         requiresAuth: true
       }

@@ -102,6 +102,16 @@ export default {
       {
         icon: 'keyboard_arrow_up',
         'icon-alt': 'keyboard_arrow_down',
+        text: 'Product Option',
+        model: false,
+        children: [
+          { icon: 'view_list', text: 'Product Option Group', title: 'productOptionGroup' },
+          { icon: 'view_list', text: 'Product Option', title: 'productOption' }
+        ]
+      },
+      {
+        icon: 'keyboard_arrow_up',
+        'icon-alt': 'keyboard_arrow_down',
         text: 'More',
         model: false,
         children: [
@@ -130,6 +140,8 @@ export default {
         router.push({name: 'productCategoryList'})
       } else if (title === 'productSubCategory') {
         router.push({name: 'productSubCategoryList'})
+      } else if (title === 'productOptionGroup') {
+        router.push({name: 'productOptionGroupList'})
       } else if (title === 'logout') {
         this.$store.dispatch('auth/logout')
       }
