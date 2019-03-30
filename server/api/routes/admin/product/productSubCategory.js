@@ -45,7 +45,7 @@ router.get('/:id', [auth, admin], (req, res) => {
 
       return res.status(200).json({ success: true, 'subCategory': subCat });
     })
-    .catch(subCat => somethinError(res, err));
+    .catch(err => somethinError(res, err));
 });
 
 // @route  POST /api/admin/product/sub-categories

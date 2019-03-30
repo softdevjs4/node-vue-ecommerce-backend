@@ -25,7 +25,7 @@ app.use(helmet());
 app.use(passport.initialize());
 
 // Passport Config
-require("./util/passport")(passport);
+require("./utils/passport")(passport);
 
 // Helper for development environment
 if (app.get('env') == 'development') {
