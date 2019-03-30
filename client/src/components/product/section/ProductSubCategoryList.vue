@@ -17,8 +17,8 @@
             </v-card-title>
             <v-data-table :headers="headers" :items="subCategories" :search="search">
               <template v-slot:items="props">
-                <td class="text-lg-left">{{ props.item.category.name }}</td>
-                <td class="text-lg-left">{{ props.item.name }}</td>
+                <td class="text-lg-left">{{ props.item.category.name | ucWords }}</td>
+                <td class="text-lg-left">{{ props.item.name | ucWords}}</td>
                 <td class="text-lg-left">{{ props.item.created_at | moment("dddd, MMMM Do YYYY") }}</td>
                 <td class="text-lg-left">
                   <v-layout row wrap>
@@ -154,6 +154,7 @@
 
 <script>
 import AppLayout from '../../layouts/AppLayout'
+import ucWords from '../../../helpers/ucWords'
 import { mapGetters } from 'vuex'
 export default {
   name: 'ProductSubCategoryList',
@@ -268,6 +269,11 @@ export default {
         _id: id
       }
       this.$store.dispatch('productSubCategory/deleteSubCategory', payload)
+    }
+  },
+  filters: {
+    ucWords: function (value) {
+      return ucWords(value)
     }
   }
 }

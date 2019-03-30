@@ -17,7 +17,7 @@
             </v-card-title>
             <v-data-table :headers="headers" :items="options" :search="search">
               <template v-slot:items="props">
-                <td class="text-lg-left">{{ props.item.optionGroup.name }}</td>
+                <td class="text-lg-left">{{ props.item.optionGroup.name | ucWords }}</td>
                 <td class="text-lg-left">{{ props.item.name }}</td>
                 <td class="text-lg-left">{{ props.item.created_at | moment("dddd, MMMM Do YYYY") }}</td>
                 <td class="text-lg-left">
@@ -154,6 +154,7 @@
 
 <script>
 import AppLayout from '../../layouts/AppLayout'
+import ucWords from '../../../helpers/ucWords'
 import { mapGetters } from 'vuex'
 export default {
   name: 'ProductOptionList',
@@ -268,6 +269,11 @@ export default {
         _id: id
       }
       this.$store.dispatch('productOption/deleteOption', payload)
+    }
+  },
+  filters: {
+    ucWords: function (value) {
+      return ucWords(value)
     }
   }
 }
