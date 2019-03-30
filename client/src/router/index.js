@@ -5,6 +5,7 @@ import UserDash from '@/components/dash/UserDash'
 import ProductCategoryList from '@/components/product/section/ProductCategoryList'
 import ProductSubCategoryList from '@/components/product/section/ProductSubCategoryList'
 import ProductOptionGroup from '@/components/product/option/ProductOptionGroupList'
+import ProductOption from '@/components/product/option/ProductOptionList'
 import HelloWorld from '@/components/HelloWorld'
 
 Vue.use(Router)
@@ -53,6 +54,14 @@ let router = new Router({
       path: '/product/option-groups',
       name: 'productOptionGroupList',
       component: ProductOptionGroup,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/product/options',
+      name: 'productOptionList',
+      component: ProductOption,
       meta: {
         requiresAuth: true
       }

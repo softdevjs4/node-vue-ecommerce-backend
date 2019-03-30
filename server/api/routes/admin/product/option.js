@@ -64,7 +64,7 @@ router.post('/', [auth, admin], (req, res) => {
       } else {
         // Create new option
         const newOption = new Option({
-          optionGroup: req.body.category,
+          optionGroup: req.body.optionGroup,
           name: optionName,
           other: req.body.other,
           note: req.body.note

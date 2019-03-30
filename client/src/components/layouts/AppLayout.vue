@@ -142,6 +142,8 @@ export default {
         router.push({name: 'productSubCategoryList'})
       } else if (title === 'productOptionGroup') {
         router.push({name: 'productOptionGroupList'})
+      } else if (title === 'productOption') {
+        router.push({name: 'productOptionList'})
       } else if (title === 'logout') {
         this.$store.dispatch('auth/logout')
       }
