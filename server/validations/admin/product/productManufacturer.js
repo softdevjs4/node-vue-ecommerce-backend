@@ -7,10 +7,16 @@ module.exports = data => {
       .min(2)
       .max(200)
       .required()
+      .trim(),
+    url: Joi.string()
+      .allow(null)
+      .allow('')
+      .uri()
+      .min(2)
       .trim()
   };
 
-  const { error } = Joi.validate(data, schema, { abortEarly: false });
+const { error } = Joi.validate(data, schema, { abortEarly: false });
   // Set validation errors
   return setValidationErrors(error);
 };

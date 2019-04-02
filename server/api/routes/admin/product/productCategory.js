@@ -68,7 +68,7 @@ router.post('/', [auth, admin], (req, res) => {
         // Save to DB
         newCategory.save()
           .then(cat => res.status(201).json({ success: true, category: cat }))
-          .catch(err => somethinError(res));
+          .catch(err => somethinError(res, err));
       }
     })
     .catch(err => somethinError(res, err));
@@ -115,7 +115,7 @@ router.delete('/:id', [auth, admin], (req, res) => {
         // Delete category
         cat.delete()
           .then(cat => res.status(200).json({ success: true, category: cat }))
-          .catch(err => somethinError(res));
+          .catch(err => somethinError(res, err));
       }
     })
     .catch(err => somethinError(res, err));

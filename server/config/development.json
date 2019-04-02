@@ -3,5 +3,10 @@
   "jwt": {
     "secretOrKey" : "secret",
     "tokenExpireIn" : 3600
+  },
+  "cloudinary": {
+    "cloud_name": "alphaecom",
+    "api_key": "146341227726449",
+    "api_secret": "iJNPtjRqsbZTsH_YK87V-Qf9chk"
   }
 }
