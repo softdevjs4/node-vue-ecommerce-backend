@@ -4,6 +4,7 @@ import error from './modules/utils/error'
 import loader from './modules/utils/loader'
 import auth from './modules/auth/auth'
 import productCategory from './modules/product/category'
+import manufacturer from './modules/manufacturer/manufacturer'
 import productSubCategory from './modules/product/subCategory'
 import productOptionGroup from './modules/product/optionGroup'
 import productOption from './modules/product/option'
@@ -15,6 +16,7 @@ export default new Vuex.Store({
     error,
     loader,
     auth,
+    manufacturer,
     productCategory,
     productSubCategory,
     productOptionGroup,

@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import LoginUser from '@/components/auth/LoginUser'
 import UserDash from '@/components/dash/UserDash'
 import ProductCategoryList from '@/components/product/section/ProductCategoryList'
+import ManufacturerList from '@/components/product/manufacturer/ManufacturerList'
 import ProductSubCategoryList from '@/components/product/section/ProductSubCategoryList'
 import ProductOptionGroup from '@/components/product/option/ProductOptionGroupList'
 import ProductOption from '@/components/product/option/ProductOptionList'
@@ -62,6 +63,14 @@ let router = new Router({
       path: '/product/options',
       name: 'productOptionList',
       component: ProductOption,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/product/manufacturers',
+      name: 'manufacturerList',
+      component: ManufacturerList,
       meta: {
         requiresAuth: true
       }

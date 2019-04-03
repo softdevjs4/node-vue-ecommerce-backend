@@ -13,10 +13,15 @@ module.exports = data => {
       .allow('')
       .uri()
       .min(2)
-      .trim()
+      .trim(),
+    image: Joi.allow(null)
   };
 
-const { error } = Joi.validate(data, schema, { abortEarly: false });
+  const {
+    error
+  } = Joi.validate(data, schema, {
+    abortEarly: false
+  });
   // Set validation errors
   return setValidationErrors(error);
 };

@@ -89,6 +89,7 @@ export default {
     drawer: null,
     items: [
       { icon: 'home', text: 'Dashboard', title: 'userDashboard' },
+      { icon: 'markunread_mailbox', text: 'Manufacturer', title: 'manufacturer' },
       {
         icon: 'keyboard_arrow_up',
         'icon-alt': 'keyboard_arrow_down',
@@ -136,6 +137,8 @@ export default {
     menuAction (title) {
       if (title === 'userDashboard') {
         router.push({name: 'userDashboard'})
+      } else if (title === 'manufacturer') {
+        router.push({name: 'manufacturerList'})
       } else if (title === 'productCategory') {
         router.push({name: 'productCategoryList'})
       } else if (title === 'productSubCategory') {
