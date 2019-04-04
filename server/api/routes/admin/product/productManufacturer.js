@@ -76,8 +76,8 @@ router.post('/', [auth, admin, multerParser.single("image")], (req, res) => {
    let mfrName = (req.body.name).toLowerCase();
   // Check manufacturer already exist or not
   ProductManufacturer.findOne({ name: mfrName })
-    .then(cat => {
-      if (cat) {
+    .then(mfr => {
+      if (mfr) {
         return res.status(409).json({ name: "Manufacturer already exist!" });
       } else {
         // Create new manufacturer
