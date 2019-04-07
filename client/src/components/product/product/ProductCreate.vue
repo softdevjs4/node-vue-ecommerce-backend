@@ -40,7 +40,7 @@
                     item-value="_id"
                     item-text="name"
                     return-object
-                    @change="selectedSubCategory"
+                    @change="selectedManufacturer"
                   ></v-select>
                 </v-flex>
                 <v-flex xs12 sm6 d-flex>
@@ -232,7 +232,7 @@
                 </v-flex>
 
                 <v-flex xs12 sm4 d-flex>
-                  <v-btn color="info">Submit</v-btn>
+                  <v-btn @click="submit" color="info">Submit</v-btn>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -324,10 +324,11 @@ export default {
       // Store manufacturer id into data for request
       this.manufacturer = manufacturer._id
     },
+    // Handle thumb select
     pickFile () {
       this.$refs.image.click()
     },
-
+    // Handle thumb upload
     onFilePicked (e) {
       const files = e.target.files
       if (files[0] !== undefined) {
@@ -346,6 +347,42 @@ export default {
         this.thumbFile = ''
         this.thumbUrl = ''
       }
+    },
+    // Submit data
+    submit () {
+      const payload = {
+        category: this.category,
+        subCategory: this.subCategory,
+        manufacturer: this.manufacturer,
+        model: this.productModel,
+        name: this.name,
+        sortDesc: this.sortDesc,
+        longDesc: this.longDesc,
+        // Flash sale data
+        flashSale: {
+          flashPrice: this.flashPrice,
+          flashStartDate: this.flashStartDate,
+          flashEndDate: this.flashEndDate,
+          flashStatus: this.flashStatus
+        }
+        // Special sale data
+        specialSale: {
+          specialPrice: this.specialPrice,
+          specialExpireDate: this.specialExpireDate,
+          specialStatus: this.specialStatus
+        }
+        // Other data
+        weight: this.weight,
+        price: this.price,
+        stock: this.stock,
+        inStock: this.inStock,
+        isFeature: this.isFeature,
+        status: this.status,
+        // Thumb
+        thumb: this.thumbFile
+      }
+
+      console.log(payload)
     }
   }
 }
