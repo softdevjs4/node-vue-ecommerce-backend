@@ -11,6 +11,7 @@ const validateCategoryInput = require('../../../../validations/admin/product/pro
 
 // Model
 const ProductCategory = require('../../../../models/admin/product/productCategory');
+const ProductSubCategory = require('../../../../models/admin/product/productSubCategory');
 
 // Helpers
 const somethinError = require('../../../../helpers/something_error');
@@ -42,6 +43,21 @@ router.get('/:id', [auth, admin], (req, res) => {
       if (!cat) return res.status(404).json({ success: false, error: 'No data found!' });
 
       return res.status(200).json({ success: true, 'category': cat });
+    })
+    .catch(err => somethinError(res, err));
+});
+
+// @route  GET /api/admin/product/categories/:id/sub-categories
+// @des    Get product sub categories by category id
+// @access Private
+router.get('/:id/sub-categories', [auth, admin], (req, res) => {
+
+  ProductSubCategory.where({category: req.params.id})
+    .then(subCat => {
+      // No sub category found
+      if (!subCat) return res.status(404).json({ success: false, error: 'No data found!' });
+
+      return res.status(200).json({ success: true, 'subCategories': subCat });
     })
     .catch(err => somethinError(res, err));
 });
