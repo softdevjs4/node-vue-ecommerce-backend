@@ -8,6 +8,7 @@ import manufacturer from './modules/manufacturer/manufacturer'
 import productSubCategory from './modules/product/subCategory'
 import productOptionGroup from './modules/product/optionGroup'
 import productOption from './modules/product/option'
+import product from './modules/product/product'
 
 Vue.use(Vuex)
 
@@ -20,6 +21,7 @@ export default new Vuex.Store({
     productCategory,
     productSubCategory,
     productOptionGroup,
-    productOption
+    productOption,
+    product
   }
 })

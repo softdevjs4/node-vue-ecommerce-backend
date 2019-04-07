@@ -113,6 +113,15 @@ export default {
       {
         icon: 'keyboard_arrow_up',
         'icon-alt': 'keyboard_arrow_down',
+        text: 'Product',
+        model: false,
+        children: [
+          { icon: 'create_new_folder', text: 'Create Product', title: 'productCreate' }
+        ]
+      },
+      {
+        icon: 'keyboard_arrow_up',
+        'icon-alt': 'keyboard_arrow_down',
         text: 'More',
         model: false,
         children: [
@@ -147,6 +156,8 @@ export default {
         router.push({name: 'productOptionGroupList'})
       } else if (title === 'productOption') {
         router.push({name: 'productOptionList'})
+      } else if (title === 'productCreate') {
+        router.push({name: 'productCreate'})
       } else if (title === 'logout') {
         this.$store.dispatch('auth/logout')
       }

@@ -2,13 +2,17 @@ import store from '../../../store'
 import Vue from 'vue'
 // Initial state
 const state = {
-  categories: []
+  categories: [],
+  subCategories: []
 }
 
 // Getters
 const getters = {
   getCategories (state) {
     return state.categories
+  },
+  getSubCategoriesByCategory (state) {
+    return state.subCategories
   }
 }
 
@@ -23,6 +27,28 @@ const actions = {
         if (response.data.success) {
           // Store to state
           commit('setCategories', response.data.categories)
+          // Deactive loader
+          store.dispatch('loader/deactiveLoader')
+          // Clear error
+          store.dispatch('error/clearErrors')
+        }
+      })
+      .catch(err => {
+        // Deactive loader
+        store.dispatch('loader/deactiveLoader')
+        // Handle all error by error state
+        store.dispatch('error/setErrors', err.response.data)
+      })
+  },
+  getSubCategoriesByCategory ({ commit }, category) {
+    // Active preloader
+    store.dispatch('loader/activeLoader')
+    // Make server request
+    Vue.axios.get(`/admin/product/categories/${category._id}/sub-categories`)
+      .then(response => {
+        if (response.data.success) {
+          // Store to state
+          commit('setSubCategories', response.data.subCategories)
           // Deactive loader
           store.dispatch('loader/deactiveLoader')
           // Clear error
@@ -106,6 +132,9 @@ const actions = {
 const mutations = {
   setCategories (state, categories) {
     state.categories = categories
+  },
+  setSubCategories (state, subCategories) {
+    state.subCategories = subCategories
   },
   createCategory (state, category) {
     // Push new data to state

@@ -7,6 +7,7 @@ import ManufacturerList from '@/components/product/manufacturer/ManufacturerList
 import ProductSubCategoryList from '@/components/product/section/ProductSubCategoryList'
 import ProductOptionGroup from '@/components/product/option/ProductOptionGroupList'
 import ProductOption from '@/components/product/option/ProductOptionList'
+import ProductCreate from '@/components/product/product/ProductCreate'
 import HelloWorld from '@/components/HelloWorld'
 
 Vue.use(Router)
@@ -71,6 +72,14 @@ let router = new Router({
       path: '/product/manufacturers',
       name: 'manufacturerList',
       component: ManufacturerList,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/products',
+      name: 'productCreate',
+      component: ProductCreate,
       meta: {
         requiresAuth: true
       }

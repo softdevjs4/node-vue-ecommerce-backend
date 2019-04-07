@@ -71,15 +71,15 @@ const productSchema = new Schema({
     default: true // Default active
   },
   flashSale: {
-    price: Number,
-    start: Date,
-    end: Date,
-    status: Boolean
+    flashPrice: Number,
+    flashStart: Date,
+    flashEnd: Date,
+    flashStatus: Boolean
   },
   specialSale: {
-    price: Number,
-    expire: Date,
-    statue: Boolean
+    specialPrice: Number,
+    specialeExpire: Date,
+    specialStatus: Boolean
   },
   attributes: Array,
   thumb: {
