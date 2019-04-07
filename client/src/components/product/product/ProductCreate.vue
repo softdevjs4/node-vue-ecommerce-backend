@@ -56,14 +56,14 @@
                   <v-textarea label="Long Desc" v-model="longDesc" required></v-textarea>
                 </v-flex>
 
-                <!-- Flash sell data -->
+                <!-- Flash sale data -->
                 <v-flex xs12 sm12 d-flex>
-                  <v-checkbox v-model="isFlash" :label="'Is Flash Sell'"></v-checkbox>
+                  <v-checkbox v-model="isFlash" :label="'Is Flash Sale'"></v-checkbox>
                 </v-flex>
 
                 <div v-if="isFlash" sm12 style="width:100%">
                   <v-container>
-                    <v-layout  row wrap>
+                    <v-layout row wrap>
                       <v-flex xs12 sm6 md4>
                         <v-text-field label="Flash Price" v-model="flashPrice"></v-text-field>
                       </v-flex>
@@ -139,16 +139,16 @@
                     </v-layout>
                   </v-container>
                 </div>
-                <!-- Flash sell end -->
+                <!-- Flash sale end -->
 
-                <!-- Special sell end -->
+                <!-- Special sale end -->
                 <v-flex xs12 sm12 d-flex>
-                  <v-checkbox v-model="isSpecial" :label="'Is Special Sell'"></v-checkbox>
+                  <v-checkbox v-model="isSpecial" :label="'Is Special Sale'"></v-checkbox>
                 </v-flex>
 
                 <div v-if="isSpecial" sm12 style="width:100%">
                   <v-container>
-                    <v-layout  row wrap>
+                    <v-layout row wrap>
                       <v-flex xs12 sm6 md4>
                         <v-text-field label="Special Price" v-model="specialPrice"></v-text-field>
                       </v-flex>
@@ -191,7 +191,49 @@
                     </v-layout>
                   </v-container>
                 </div>
-                <!-- Special sell end -->
+                <!-- Special sale end -->
+
+                <v-flex xs12 sm6 d-flex>
+                  <v-text-field label="Product Weight(KG)" v-model="weight"></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 d-flex>
+                  <v-text-field label="Product Price($)" v-model="price"></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 d-flex>
+                  <v-text-field label="Product Stock" v-model="stock"></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 d-flex>
+                  <v-checkbox v-model="inStock" :label="'In Stock'"></v-checkbox>
+                </v-flex>
+                <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
+                  <img :src="thumbUrl" height="150" v-if="thumbUrl">
+                  <v-text-field
+                    label="Select Product Thumb"
+                    @click="pickFile"
+                    v-model="thumbName"
+                    prepend-icon="photo"
+                  ></v-text-field>
+                  <input
+                    type="file"
+                    style="display: none"
+                    ref="image"
+                    accept="image/*"
+                    @change="onFilePicked"
+                  >
+                </v-flex>
+                <v-flex xs12 sm6 d-flex>
+                  <v-checkbox v-model="isFeature" :label="'Is Feature Product'"></v-checkbox>
+                </v-flex>
+                <v-flex xs12 sm6 d-flex>
+                  <v-checkbox v-model="status" :label="'Product Active'"></v-checkbox>
+                </v-flex>
+                <v-flex xs12 sm12 d-flex>
+                  <v-divider></v-divider>
+                </v-flex>
+
+                <v-flex xs12 sm4 d-flex>
+                  <v-btn color="info">Submit</v-btn>
+                </v-flex>
               </v-layout>
             </v-container>
           </v-card>
@@ -222,7 +264,7 @@ export default {
     name: '',
     sortDesc: '',
     longDesc: '',
-    // Flash sell data
+    // Flash sale data
     isFlash: false,
     flashPrice: '',
     flashStartDate: new Date().toISOString().substr(0, 10),
@@ -231,12 +273,25 @@ export default {
     flashEndMenu: false,
     modal: false,
     flashStatus: false,
-    // Special sell data
+    // Special sale data
     isSpecial: false,
     specialPrice: '',
     specialExpireDate: new Date().toISOString().substr(0, 10),
     specialExpireMenu: false,
-    specialStatus: false
+    specialStatus: false,
+
+    // Other data
+    weight: '',
+    price: '',
+    stock: 0,
+    inStock: true,
+    isFeature: false,
+    status: true,
+
+    // Thumb
+    thumbName: '',
+    thumbUrl: '',
+    thumbFile: ''
   }),
   created () {
     // Dispatch action to get all category
@@ -268,6 +323,29 @@ export default {
     selectedManufacturer (manufacturer) {
       // Store manufacturer id into data for request
       this.manufacturer = manufacturer._id
+    },
+    pickFile () {
+      this.$refs.image.click()
+    },
+
+    onFilePicked (e) {
+      const files = e.target.files
+      if (files[0] !== undefined) {
+        this.thumbName = files[0].name
+        if (this.thumbName.lastIndexOf('.') <= 0) {
+          return
+        }
+        const fr = new FileReader()
+        fr.readAsDataURL(files[0])
+        fr.addEventListener('load', () => {
+          this.thumbUrl = fr.result
+          this.thumbFile = files[0]
+        })
+      } else {
+        this.thumbName = ''
+        this.thumbFile = ''
+        this.thumbUrl = ''
+      }
     }
   }
 }
