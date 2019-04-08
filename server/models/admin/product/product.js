@@ -8,18 +8,17 @@ const productSchema = new Schema({
   },
   category: {
     type: mongoose.Types.ObjectId,
-    ref: "Category",
+    ref: "ProductCategory",
     required: true
   },
   subCategory: {
     type: mongoose.Types.ObjectId,
-    ref: "SubCategory",
+    ref: "ProductSubCategory",
     required: true
   },
   manufacturer: {
     _id: String,
     name: String,
-    slug: String,
     image: String
   },
   name: {
@@ -70,17 +69,16 @@ const productSchema = new Schema({
     required: true,
     default: true // Default active
   },
-  flashSale: {
-    flashPrice: Number,
-    flashStart: Date,
-    flashEnd: Date,
-    flashStatus: Boolean
+  isFlashSale: {
+    type: Boolean,
+    default: false
   },
-  specialSale: {
-    specialPrice: Number,
-    specialeExpire: Date,
-    specialStatus: Boolean
+  flashSale: Object,
+  isSpecialSale: {
+    type: Boolean,
+    default: false
   },
+  specialSale: Object,
   attributes: Array,
   thumb: {
     type: Object,

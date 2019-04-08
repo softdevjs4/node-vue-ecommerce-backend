@@ -29,6 +29,8 @@ const {
 // @access Private
 router.get('/', [auth, admin], (req, res) => {
   Product.find()
+    .populate('category')
+    .populate('subCategory')
     .then(products => {
       if (!products) return res.status(404).json({
         success: false,
@@ -87,7 +89,6 @@ router.post('/', [auth, admin, multerParser.single('thumb')], (req, res) => {
             'sku',
             'category',
             'subCategory',
-            'manufacturer',
             'name',
             'model',
             'weight',
@@ -98,11 +99,37 @@ router.post('/', [auth, admin, multerParser.single('thumb')], (req, res) => {
             'inStock',
             'isFeaturer',
             'status',
-            'flashSale',
-            'specialSale',
             'attributes',
           ])
         )
+         // Embided Manufacturer
+         if(req.body.hasManufacturer){
+          newProduct.manufacturer = {
+            _id: req.body.manufacturerId,
+            name : req.body.manufacturerName,
+            image : req.body.manufacturerImage
+          }
+         }
+         // If flash Sale
+         if(req.body.isFlashSale){
+           newProduct.isFlashSale = true;
+            newProduct.flashSale = {
+              flashPrice : req.body.flashPrice,
+              flashStart : req.body.flashStart,
+              flashEnd : req.body.flashEnd,
+              flashStatus : req.body.flashStatus
+            }
+         }
+
+         // If special sell
+         if(req.body.isSpecialSale){
+          newProduct.isSpecialSale = true;
+          newProduct.specialSale = {
+            specialPrice : req.body.specialPrice,
+            specialExpire : req.body.specialExpire,
+            specialStatus : req.body.specialStatus
+          }
+       }
 
         // Make name lowercase and make slug
         newProduct.name = productName;
@@ -115,7 +142,6 @@ router.post('/', [auth, admin, multerParser.single('thumb')], (req, res) => {
             url: req.file.url
           }
         }
-
         // Save to db
         newProduct.save()
           .then(result => res.status(201).json({

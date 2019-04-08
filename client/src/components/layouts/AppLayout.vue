@@ -116,7 +116,8 @@ export default {
         text: 'Product',
         model: false,
         children: [
-          { icon: 'create_new_folder', text: 'Create Product', title: 'productCreate' }
+          { icon: 'create_new_folder', text: 'Create Product', title: 'productCreate' },
+          { icon: 'list', text: 'Product List', title: 'productList' }
         ]
       },
       {
@@ -158,6 +159,8 @@ export default {
         router.push({name: 'productOptionList'})
       } else if (title === 'productCreate') {
         router.push({name: 'productCreate'})
+      } else if (title === 'productList') {
+        router.push({name: 'productList'})
       } else if (title === 'logout') {
         this.$store.dispatch('auth/logout')
       }

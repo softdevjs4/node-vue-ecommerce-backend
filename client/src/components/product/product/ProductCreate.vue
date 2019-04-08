@@ -299,6 +299,7 @@ export default {
     sku: '',
     category: '',
     subCategory: '',
+    hasManufacturer: false,
     manufacturer: '',
     productModel: '',
     name: '',
@@ -364,6 +365,7 @@ export default {
     },
     selectedManufacturer (manufacturer) {
       // Store manufacturer id into data for request
+      this.hasManufacturer = true
       this.manufacturer = manufacturer
     },
     // Handle thumb select
@@ -396,24 +398,24 @@ export default {
         sku: this.sku,
         category: this.category,
         subCategory: this.subCategory,
+        // manufacturer
+        hasManufacturer: this.hasManufacturer,
         manufacturer: this.manufacturer,
         model: this.productModel,
         name: this.name,
         sortDesc: this.sortDesc,
         longDesc: this.longDesc,
         // Flash sale data
-        flashSale: {
-          flashPrice: this.flashPrice,
-          flashStartDate: this.flashStartDate,
-          flashEndDate: this.flashEndDate,
-          flashStatus: this.flashStatus
-        },
+        isFlashSale: this.isFlash,
+        flashPrice: this.flashPrice,
+        flashStartDate: this.flashStartDate,
+        flashEndDate: this.flashEndDate,
+        flashStatus: this.flashStatus,
         // Special sale data
-        specialSale: {
-          specialPrice: this.specialPrice,
-          specialExpireDate: this.specialExpireDate,
-          specialStatus: this.specialStatus
-        },
+        isSpecialSale: this.isSpecial,
+        specialPrice: this.specialPrice,
+        specialExpireDate: this.specialExpireDate,
+        specialStatus: this.specialStatus,
         // Other data
         weight: this.weight,
         price: this.price,
