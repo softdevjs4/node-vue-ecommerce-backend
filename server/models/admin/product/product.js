@@ -17,10 +17,10 @@ const productSchema = new Schema({
     required: true
   },
   manufacturer: {
-    id: String,
+    _id: String,
     name: String,
     slug: String,
-    imae: String
+    image: String
   },
   name: {
     type: String,

@@ -7,7 +7,7 @@ module.exports = data => {
     sku: Joi.string().required().trim(),
     category: Joi.objectId().required(),
     subCategory: Joi.objectId().required(),
-    manufacturer: Joi.object().allow(null).allow(''),
+    manufacturer: Joi.allow(null).allow(''),
     name: Joi.string()
       .min(1)
       .max(400)
@@ -26,9 +26,10 @@ module.exports = data => {
     inStock: Joi.boolean().allow(null).allow(''),
     isFeature: Joi.boolean().allow(null).allow(''),
     status: Joi.boolean().required(),
-    flashSale: Joi.object().allow(null).allow(''),
-    specialSale: Joi.object().allow(null).allow(''),
+    flashSale: Joi.allow(null).allow(''),
+    specialSale: Joi.allow(null).allow(''),
     attributes: Joi.array().allow(null).allow(''),
+    thumb: Joi.string().allow(null).allow(''),
     images: Joi.array().allow(null).allow(''),
 
   };

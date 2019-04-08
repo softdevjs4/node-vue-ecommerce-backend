@@ -10,7 +10,17 @@
             </v-card-title>
             <v-container fluid grid-list-xl>
               <v-layout wrap align-center>
-                <v-flex xs12 sm6 d-flex>
+                <v-flex xs12 sm12>
+                  <v-text-field label="SKU" v-model="sku" required></v-text-field>
+                  <div v-if="isError" class="v-text-field__details text-sm-left">
+                    <div class="v-messages theme--light error--text">
+                      <div class="v-messages__wrapper">
+                        <div class="v-messages__message red--text">{{ errors.sku }}</div>
+                      </div>
+                    </div>
+                  </div>
+                </v-flex>
+                <v-flex xs12 sm6>
                   <v-select
                     label="Category"
                     v-model="selectCategory"
@@ -20,8 +30,16 @@
                     return-object
                     @change="selectedCategory"
                   ></v-select>
+                  <div v-if="isError" class="v-text-field__details text-sm-left">
+                    <div class="v-messages theme--light error--text">
+                      <div class="v-messages__wrapper">
+                        <div class="v-messages__message red--text">{{ errors.category }}</div>
+                      </div>
+                    </div>
+                  </div>
                 </v-flex>
-                <v-flex xs12 sm6 d-flex>
+
+                <v-flex xs12 sm6>
                   <v-select
                     label="Sub Category"
                     v-model="selectSubCategory"
@@ -31,6 +49,13 @@
                     return-object
                     @change="selectedSubCategory"
                   ></v-select>
+                  <div v-if="isError" class="v-text-field__details text-sm-left">
+                    <div class="v-messages theme--light error--text">
+                      <div class="v-messages__wrapper">
+                        <div class="v-messages__message red--text">{{ errors.subCategory }}</div>
+                      </div>
+                    </div>
+                  </div>
                 </v-flex>
                 <v-flex xs12 sm6 d-flex>
                   <v-select
@@ -46,11 +71,25 @@
                 <v-flex xs12 sm6 d-flex>
                   <v-text-field label="Product Model" v-model="productModel"></v-text-field>
                 </v-flex>
-                <v-flex xs12 sm12 d-flex>
+                <v-flex xs12 sm12>
                   <v-text-field label="Product Name" v-model="name" :counter="400" required></v-text-field>
+                  <div v-if="isError" class="v-text-field__details text-sm-left">
+                    <div class="v-messages theme--light error--text">
+                      <div class="v-messages__wrapper">
+                        <div class="v-messages__message red--text">{{ errors.name }}</div>
+                      </div>
+                    </div>
+                  </div>
                 </v-flex>
-                <v-flex xs12 sm12 d-flex>
+                <v-flex xs12 sm12>
                   <v-text-field label="Sort Desc" v-model="sortDesc" :counter="200" required></v-text-field>
+                  <div v-if="isError" class="v-text-field__details text-sm-left">
+                    <div class="v-messages theme--light error--text">
+                      <div class="v-messages__wrapper">
+                        <div class="v-messages__message red--text">{{ errors.sortDesc }}</div>
+                      </div>
+                    </div>
+                  </div>
                 </v-flex>
                 <v-flex xs12 sm12 d-flex>
                   <v-textarea label="Long Desc" v-model="longDesc" required></v-textarea>
@@ -65,7 +104,7 @@
                   <v-container>
                     <v-layout row wrap>
                       <v-flex xs12 sm6 md4>
-                        <v-text-field label="Flash Price" v-model="flashPrice"></v-text-field>
+                        <v-text-field  type="number" label="Flash Price" v-model="flashPrice"></v-text-field>
                       </v-flex>
                       <v-flex xs12 sm6 md4>
                         <v-menu
@@ -150,7 +189,7 @@
                   <v-container>
                     <v-layout row wrap>
                       <v-flex xs12 sm6 md4>
-                        <v-text-field label="Special Price" v-model="specialPrice"></v-text-field>
+                        <v-text-field type="number" label="Special Price" v-model="specialPrice"></v-text-field>
                       </v-flex>
                       <v-flex xs12 sm6 md4>
                         <v-menu
@@ -194,13 +233,13 @@
                 <!-- Special sale end -->
 
                 <v-flex xs12 sm6 d-flex>
-                  <v-text-field label="Product Weight(KG)" v-model="weight"></v-text-field>
+                  <v-text-field type="number" label="Product Weight(KG)" v-model="weight"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 d-flex>
-                  <v-text-field label="Product Price($)" v-model="price"></v-text-field>
+                  <v-text-field type="number" label="Product Price($)" v-model="price"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 d-flex>
-                  <v-text-field label="Product Stock" v-model="stock"></v-text-field>
+                  <v-text-field type="number" label="Product Stock" v-model="stock"></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 d-flex>
                   <v-checkbox v-model="inStock" :label="'In Stock'"></v-checkbox>
@@ -257,6 +296,7 @@ export default {
     selectSubCategory: {},
     selectManufacturer: {},
     // from data
+    sku: '',
     category: '',
     subCategory: '',
     manufacturer: '',
@@ -266,7 +306,7 @@ export default {
     longDesc: '',
     // Flash sale data
     isFlash: false,
-    flashPrice: '',
+    flashPrice: 0,
     flashStartDate: new Date().toISOString().substr(0, 10),
     flashStartMenu: false,
     flashEndDate: new Date().toISOString().substr(0, 10),
@@ -275,14 +315,14 @@ export default {
     flashStatus: false,
     // Special sale data
     isSpecial: false,
-    specialPrice: '',
+    specialPrice: 0,
     specialExpireDate: new Date().toISOString().substr(0, 10),
     specialExpireMenu: false,
     specialStatus: false,
 
     // Other data
     weight: '',
-    price: '',
+    price: 0,
     stock: 0,
     inStock: true,
     isFeature: false,
@@ -301,6 +341,8 @@ export default {
   },
   computed: {
     ...mapGetters({
+      isError: 'error/isError',
+      errors: 'error/getErrors',
       categories: 'productCategory/getCategories',
       subCategories: 'productCategory/getSubCategoriesByCategory',
       manufacturers: 'manufacturer/getManufacturers'
@@ -322,7 +364,7 @@ export default {
     },
     selectedManufacturer (manufacturer) {
       // Store manufacturer id into data for request
-      this.manufacturer = manufacturer._id
+      this.manufacturer = manufacturer
     },
     // Handle thumb select
     pickFile () {
@@ -351,6 +393,7 @@ export default {
     // Submit data
     submit () {
       const payload = {
+        sku: this.sku,
         category: this.category,
         subCategory: this.subCategory,
         manufacturer: this.manufacturer,
@@ -364,13 +407,13 @@ export default {
           flashStartDate: this.flashStartDate,
           flashEndDate: this.flashEndDate,
           flashStatus: this.flashStatus
-        }
+        },
         // Special sale data
         specialSale: {
           specialPrice: this.specialPrice,
           specialExpireDate: this.specialExpireDate,
           specialStatus: this.specialStatus
-        }
+        },
         // Other data
         weight: this.weight,
         price: this.price,
@@ -382,7 +425,8 @@ export default {
         thumb: this.thumbFile
       }
 
-      console.log(payload)
+      // Dispatch product create action
+      this.$store.dispatch('product/createProduct', payload)
     }
   }
 }
