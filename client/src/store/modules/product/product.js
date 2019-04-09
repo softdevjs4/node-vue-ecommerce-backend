@@ -96,6 +96,15 @@ const actions = {
         // Handle all errors by error state
         store.dispatch('error/setErrors', err.response.data)
       })
+  },
+  addProductAttribute ({commit}, payload) {
+    Vue.axios.post(`/admin/product/products/${payload.productId}/attributes`, payload)
+      .then(res => {
+        console.log(res.data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 }
 // Mutations
@@ -107,7 +116,8 @@ const mutations = {
   createProduct (state, product) {
     // Push new product to product state
     state.products.push(product)
-  }
+  },
+  addProductAttribute (state, product) {}
 }
 
 export default {

@@ -2,13 +2,17 @@ import store from '../../../store'
 import Vue from 'vue'
 // Initial state
 const state = {
-  optionGroups: []
+  optionGroups: [],
+  options: []
 }
 
 // Getters
 const getters = {
   getOptionGroups (state) {
     return state.optionGroups
+  },
+  getOptionsByOptionGroup (state) {
+    return state.options
   }
 }
 
@@ -23,6 +27,28 @@ const actions = {
         if (response.data.success) {
           // Store to state
           commit('setOptionGroups', response.data.optionGroups)
+          // Deactive loader
+          store.dispatch('loader/deactiveLoader')
+          // Clear error
+          store.dispatch('error/clearErrors')
+        }
+      })
+      .catch(err => {
+        // Deactive loader
+        store.dispatch('loader/deactiveLoader')
+        // Handle all error by error state
+        store.dispatch('error/setErrors', err.response.data)
+      })
+  },
+  getOptionsByOptionGroup ({ commit }, optionGroup) {
+    // Active preloader
+    store.dispatch('loader/activeLoader')
+    // Make server request
+    Vue.axios.get(`/admin/product/option-groups/${optionGroup._id}/options`)
+      .then(response => {
+        if (response.data.success) {
+          // Store to state
+          commit('setOptions', response.data.options)
           // Deactive loader
           store.dispatch('loader/deactiveLoader')
           // Clear error
@@ -106,6 +132,9 @@ const actions = {
 const mutations = {
   setOptionGroups (state, optionGroups) {
     state.optionGroups = optionGroups
+  },
+  setOptions (state, options) {
+    state.options = options
   },
   createOptionGroup (state, optionGroup) {
     // Push new data to state

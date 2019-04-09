@@ -106,7 +106,7 @@
                   <v-layout row wrap>
                     <v-flex sm6>
                       <v-btn small icon color="primary" style="flot:left">
-                        <v-icon small>edit</v-icon>
+                        <router-link :to="{name: 'productAttribute', params: {productId: props.item._id}}" exact><v-icon small>edit</v-icon></router-link>
                       </v-btn>
                     </v-flex>
                     <v-flex sm6>

@@ -11,6 +11,7 @@ const validateOptionGroupInput = require('../../../../validations/admin/product/
 
 // Model
 const OptionGroup = require('../../../../models/admin/product/optionGroup');
+const Option = require('../../../../models/admin/product/option');
 
 // Helpers
 const somethinError = require('../../../../helpers/something_error');
@@ -42,6 +43,21 @@ router.get('/:id', [auth, admin], (req, res) => {
       if (!optinGroup) return res.status(404).json({ success: false, error: 'No data found!' });
 
       return res.status(200).json({ success: true, 'optinGroup': optinGroup });
+    })
+    .catch(err => somethinError(res, err));
+});
+
+// @route  GET /api/admin/product/option-groups/:id/options
+// @des    Get product option belongs to this group
+// @access Private
+router.get('/:id/options', [auth, admin], (req, res) => {
+
+  Option.find({optionGroup: req.params.id})
+    .then(options => {
+      // No option  found
+      if (!options) return res.status(404).json({ success: false, error: 'No data found!' });
+
+      return res.status(200).json({ success: true, 'options': options });
     })
     .catch(err => somethinError(res, err));
 });
