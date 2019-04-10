@@ -104,15 +104,29 @@
                 </td>
                 <td class="text-lg-left">
                   <v-layout row wrap>
-                    <v-flex sm6>
-                      <v-btn small icon color="primary" style="flot:left">
-                        <router-link :to="{name: 'productAttribute', params: {productId: props.item._id}}" exact><v-icon small>edit</v-icon></router-link>
-                      </v-btn>
-                    </v-flex>
-                    <v-flex sm6>
-                      <v-btn small icon color="red">
-                        <v-icon small color="white">delete</v-icon>
-                      </v-btn>
+                    <v-flex sm12>
+                     <v-menu offset-y>
+                      <template v-slot:activator="{ on }">
+                        <v-btn
+                          small
+                          v-on="on"
+                          fab
+                          dark
+                          color="teal"
+                        >
+                          <v-icon>list</v-icon>
+                        </v-btn>
+                      </template>
+                      <v-list>
+                        <v-list-tile
+                          v-for="(item, index) in settingItems"
+                          :key="index"
+                          @click="settingsAction(item.title, props.item)"
+                        >
+                          <v-list-tile-title :class="{deleteMenu: item.isDeleteMenu}">{{ item.title }}</v-list-tile-title>
+                        </v-list-tile>
+                      </v-list>
+                    </v-menu>
                     </v-flex>
                   </v-layout>
                 </td>
@@ -197,6 +211,11 @@ export default {
       40,
       { text: '$vuetify.dataIterator.rowsPerPageAll', value: -1 }
     ],
+    settingItems: [
+      { title: 'Attributes' },
+      // eslint-disable-next-line standard/object-curly-even-spacing
+      { title: 'Delete', isDeleteMenu: true}
+    ],
     pagination: {
       rowsPerPage: 20
     }
@@ -218,6 +237,11 @@ export default {
     showThumb (imageSrc) {
       this.showThumbDialog = true
       this.showThumbUrl = imageSrc
+    },
+    settingsAction (title, item) {
+      if (title === 'Attributes') {
+        this.$router.push({name: 'productAttribute', params: {productId: item._id}})
+      }
     }
   },
   filters: {
@@ -245,5 +269,8 @@ p {
 .special-header{
   color: white;
   text-align: center;
+}
+.deleteMenu{
+  color: red !important;
 }
 </style>
