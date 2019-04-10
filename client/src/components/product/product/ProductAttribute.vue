@@ -59,6 +59,44 @@
             </v-container>
           </v-card>
         </div>
+        <div xs12>
+          <v-card>
+            <v-card-title>
+              <h3 class="primary--text text-lg-left">Attributes</h3>
+            </v-card-title>
+            <v-container fluid grid-list-xl>
+              <v-layout wrap align-center >
+                 <v-data-table :headers="headers" :items="attributes" :search="search" style="width:100%">
+                  <template v-slot:items="props">
+                    <td class="text-lg-left">{{ props.item.optionGroupName | ucWords}}</td>
+                    <td class="text-lg-left">
+                      <span v-for="option in props.item.options" :key="option._id">{{option.name}}, </span>
+                    </td>
+                    <td class="text-lg-left">
+                      <v-layout row wrap>
+                        <v-flex sm12>
+                          <v-btn small icon color="red">
+                            <v-icon
+                              small
+                              color="white"
+                              @click="deleteAttribute($event, props.item.optionGroupId)"
+                            >delete</v-icon>
+                          </v-btn>
+                        </v-flex>
+                      </v-layout>
+                    </td>
+                  </template>
+                  <v-alert
+                    v-slot:no-results
+                    :value="true"
+                    color="error"
+                    icon="warning"
+                  >Your search for "{{ search }}" found no results.</v-alert>
+                </v-data-table>
+              </v-layout>
+            </v-container>
+          </v-card>
+        </div>
       </div>
     </app-layout>
   </div>
@@ -67,6 +105,7 @@
 <script>
 import AppLayout from '../../layouts/AppLayout'
 import Loader from '../../utils/Loader'
+import ucWords from '../../../helpers/ucWords'
 import { mapGetters } from 'vuex'
 export default {
   components: {
@@ -78,18 +117,32 @@ export default {
     selectOptionGroup: {},
     selectSubCategory: {},
     optionGroup: '',
-    option: ''
+    option: '',
+    search: '',
+    headers: [
+      {
+        text: 'Option Group',
+        align: 'left',
+        sortable: true,
+        value: 'group'
+      },
+      { text: 'Options', value: 'options' },
+      { text: 'Action', value: 'action' }
+    ]
   }),
   created () {
     // Dispatch action to get all option group
     this.$store.dispatch('productOptionGroup/getOptionGroups')
+    // Dispatch action to get all attributes
+    this.$store.dispatch('product/getAttributes', this.productId)
   },
   computed: {
     ...mapGetters({
       isError: 'error/isError',
       errors: 'error/getErrors',
       productOptionGroups: 'productOptionGroup/getOptionGroups',
-      options: 'productOptionGroup/getOptionsByOptionGroup'
+      options: 'productOptionGroup/getOptionsByOptionGroup',
+      attributes: 'product/getAttributes'
     })
   },
   methods: {
@@ -116,6 +169,20 @@ export default {
       }
       // Dispatch action to add product attribute
       this.$store.dispatch('product/addProductAttribute', payload)
+    },
+    deleteAttribute (e, attId) {
+      e.preventDefault()
+      const payload = {
+        productId: this.productId,
+        attId: attId
+      }
+      // Dispatch attribute delete action
+      this.$store.dispatch('product/deleteAttribute', payload)
+    }
+  },
+  filters: {
+    ucWords: function (value) {
+      return ucWords(value)
     }
   }
 }

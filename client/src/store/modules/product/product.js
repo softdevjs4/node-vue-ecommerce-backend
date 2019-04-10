@@ -4,13 +4,17 @@ import Vue from 'vue'
 
 // Initial state
 const state = {
-  products: []
+  products: [],
+  attributes: []
 }
 
 // Getters
 const getters = {
   getProducts (state) {
     return state.products
+  },
+  getAttributes (state) {
+    return state.attributes
   }
 }
 // Actions
@@ -23,6 +27,26 @@ const actions = {
       .then(res => {
         // Set product to state
         commit('setProducts', res.data.products)
+        // Deactive preloader
+        store.dispatch('loader/deactiveLoader')
+        // Clear all error data
+        store.dispatch('error/clearErrors')
+      })
+      .catch(err => {
+        // Deactive preloader
+        store.dispatch('loader/deactiveLoader')
+        // Handle all errors by error state
+        store.dispatch('error/setErrors', err.response.data)
+      })
+  },
+  getAttributes ({commit}, productId) {
+    // Active preloader
+    store.dispatch('loader/activeLoader')
+    // Make server request
+    Vue.axios.get(`/admin/product/products/${productId}/attributes`)
+      .then(res => {
+        // Set product to state
+        commit('setAttributes', res.data.attributes)
         // Deactive preloader
         store.dispatch('loader/deactiveLoader')
         // Clear all error data
@@ -98,12 +122,41 @@ const actions = {
       })
   },
   addProductAttribute ({commit}, payload) {
+    // Active preloader
+    store.dispatch('loader/activeLoader')
     Vue.axios.post(`/admin/product/products/${payload.productId}/attributes`, payload)
       .then(res => {
-        console.log(res.data)
+        // Set attributes to state
+        commit('setAttributes', res.data.attributes)
+        // Deactive preloader
+        store.dispatch('loader/deactiveLoader')
+        // Clear all error data
+        store.dispatch('error/clearErrors')
       })
       .catch(err => {
-        console.log(err)
+        // Deactive preloader
+        store.dispatch('loader/deactiveLoader')
+        // Handle all errors by error state
+        store.dispatch('error/setErrors', err.response.data)
+      })
+  },
+  deleteAttribute ({commit}, payload) {
+    // Active preloader
+    store.dispatch('loader/activeLoader')
+    Vue.axios.delete(`/admin/product/products/${payload.productId}/attributes/${payload.attId}`)
+      .then(res => {
+        // Delete attributes from state
+        commit('deleteAttributes', res.data.attributes)
+        // Deactive preloader
+        store.dispatch('loader/deactiveLoader')
+        // Clear all error data
+        store.dispatch('error/clearErrors')
+      })
+      .catch(err => {
+        // Deactive preloader
+        store.dispatch('loader/deactiveLoader')
+        // Handle all errors by error state
+        store.dispatch('error/setErrors', err.response.data)
       })
   }
 }
@@ -113,11 +166,20 @@ const mutations = {
     // set all received product to state
     state.products = products
   },
+  setAttributes (state, attributes) {
+    // set all received product attributes to state
+    state.attributes = attributes
+  },
   createProduct (state, product) {
     // Push new product to product state
     state.products.push(product)
   },
-  addProductAttribute (state, product) {}
+  addProductAttribute (state, attributes) {
+    state.attributes = attributes
+  },
+  deleteAttributes (state, attributes) {
+    state.attributes = attributes
+  }
 }
 
 export default {

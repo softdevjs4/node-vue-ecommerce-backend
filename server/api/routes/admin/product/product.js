@@ -61,6 +61,24 @@ router.get('/:id', [auth, admin], (req, res) => {
     .catch(err => somethinError(res, err));
 });
 
+// @route  GET /api/admin/product/products/:id/attributes
+// @des    Get product attributes
+// @access Private
+router.get('/:id/attributes', [auth, admin], (req, res) => {
+  Product.findById(req.params.id)
+    .then(product => {
+      if (!product) return res.status(404).json({
+        success: false,
+        error: 'No data found!'
+      })
+      return res.json({
+        success: true,
+        attributes: product.attributes
+      });
+    })
+    .catch(err => somethinError(res, err));
+});
+
 // @route  POST /api/admin/product/products
 // @des    Create new product
 // @access Private
@@ -256,7 +274,7 @@ router.delete('/:id', [auth, admin], (req, res) => {
 });
 
 // @route  POST /api/admin/product/products/:id/attributes
-// @des    Add product attrivute
+// @des    Add product attribute
 // @access Private
 router.post('/:id/attributes', [auth, admin], (req, res) => {
   // Check exist or not
@@ -308,10 +326,40 @@ router.post('/:id/attributes', [auth, admin], (req, res) => {
         product.save()
         .then(result => res.status(200).json({
           success: true,
-          product: result
+          attributes: result.attributes
         }))
         .catch(err => somethinError(res, err));
       }
+    })
+    .catch(err => somethinError(res, err));
+});
+
+// @route  DELETE /api/admin/product/products/:id/attributes/:attId
+// @des    Delete product attribute
+// @access Private
+router.delete('/:id/attributes/:attId', [auth, admin], (req, res) => {
+  // Check exist or not
+  Product.findById(req.params.id)
+    .then(product => {
+      if (!product) {
+        return res.status(404).json({
+          success: false,
+          error: 'Product not found!'
+        })
+      } else {
+        // Find delete index
+        const deleteIndex = product.attributes.map(att => att.optionGroupId ).indexOf(req.params.attId);
+        // Delete attribute
+        product.attributes.splice(deleteIndex, 1);
+      }
+      
+      // Update product attribute
+      product.save()
+      .then(result => res.status(200).json({
+        success: true,
+        attributes: result.attributes
+      }))
+      .catch(err => somethinError(res, err));
     })
     .catch(err => somethinError(res, err));
 });
