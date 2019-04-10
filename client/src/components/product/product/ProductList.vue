@@ -213,6 +213,7 @@ export default {
     ],
     settingItems: [
       { title: 'Attributes' },
+      { title: 'Images' },
       // eslint-disable-next-line standard/object-curly-even-spacing
       { title: 'Delete', isDeleteMenu: true}
     ],
@@ -241,6 +242,8 @@ export default {
     settingsAction (title, item) {
       if (title === 'Attributes') {
         this.$router.push({name: 'productAttribute', params: {productId: item._id}})
+      } else if (title === 'Images') {
+        this.$router.push({name: 'productImage', params: {productId: item._id}})
       }
     }
   },

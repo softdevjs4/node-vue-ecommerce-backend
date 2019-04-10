@@ -5,7 +5,8 @@ import Vue from 'vue'
 // Initial state
 const state = {
   products: [],
-  attributes: []
+  attributes: [],
+  images: []
 }
 
 // Getters
@@ -15,6 +16,9 @@ const getters = {
   },
   getAttributes (state) {
     return state.attributes
+  },
+  getImages (state) {
+    return state.images
   }
 }
 // Actions
@@ -45,8 +49,28 @@ const actions = {
     // Make server request
     Vue.axios.get(`/admin/product/products/${productId}/attributes`)
       .then(res => {
-        // Set product to state
+        // Set attribute to state
         commit('setAttributes', res.data.attributes)
+        // Deactive preloader
+        store.dispatch('loader/deactiveLoader')
+        // Clear all error data
+        store.dispatch('error/clearErrors')
+      })
+      .catch(err => {
+        // Deactive preloader
+        store.dispatch('loader/deactiveLoader')
+        // Handle all errors by error state
+        store.dispatch('error/setErrors', err.response.data)
+      })
+  },
+  getImages ({commit}, productId) {
+    // Active preloader
+    store.dispatch('loader/activeLoader')
+    // Make server request
+    Vue.axios.get(`/admin/product/products/${productId}/images`)
+      .then(res => {
+        // Set images to state
+        commit('setImages', res.data.images)
         // Deactive preloader
         store.dispatch('loader/deactiveLoader')
         // Clear all error data
@@ -158,6 +182,47 @@ const actions = {
         // Handle all errors by error state
         store.dispatch('error/setErrors', err.response.data)
       })
+  },
+  addProductImage ({commit}, payload) {
+    // Make form data
+    const fd = new FormData()
+    fd.append('image', payload.image)
+    // Active preloader
+    store.dispatch('loader/activeLoader')
+    Vue.axios.post(`/admin/product/products/${payload.productId}/images`, fd)
+      .then(res => {
+        // Set attributes to state
+        commit('setImages', res.data.images)
+        // Deactive preloader
+        store.dispatch('loader/deactiveLoader')
+        // Clear all error data
+        store.dispatch('error/clearErrors')
+      })
+      .catch(err => {
+        // Deactive preloader
+        store.dispatch('loader/deactiveLoader')
+        // Handle all errors by error state
+        store.dispatch('error/setErrors', err.response.data)
+      })
+  },
+  deleteImage ({commit}, payload) {
+    // Active preloader
+    store.dispatch('loader/activeLoader')
+    Vue.axios.delete(`/admin/product/products/${payload.productId}/images`)
+      .then(res => {
+        // Delete images from state
+        commit('deleteImages', res.data.images)
+        // Deactive preloader
+        store.dispatch('loader/deactiveLoader')
+        // Clear all error data
+        store.dispatch('error/clearErrors')
+      })
+      .catch(err => {
+        // Deactive preloader
+        store.dispatch('loader/deactiveLoader')
+        // Handle all errors by error state
+        store.dispatch('error/setErrors', err.response.data)
+      })
   }
 }
 // Mutations
@@ -170,6 +235,10 @@ const mutations = {
     // set all received product attributes to state
     state.attributes = attributes
   },
+  setImages (state, images) {
+    // set all received product images to state
+    state.images = images
+  },
   createProduct (state, product) {
     // Push new product to product state
     state.products.push(product)
@@ -179,6 +248,9 @@ const mutations = {
   },
   deleteAttributes (state, attributes) {
     state.attributes = attributes
+  },
+  deleteImages (state, images) {
+    state.images = images
   }
 }
 

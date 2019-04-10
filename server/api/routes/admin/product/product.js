@@ -17,10 +17,7 @@ const Product = require('../../../../models/admin/product/product');
 const somethinError = require('../../../../helpers/something_error');
 // Image upload
 const {
-  multerParser
-} = require('../../../../utils/cloudinary');
-// Delete image
-const {
+  multerParser,
   deleteServerImage
 } = require('../../../../utils/cloudinary');
 
@@ -74,6 +71,24 @@ router.get('/:id/attributes', [auth, admin], (req, res) => {
       return res.json({
         success: true,
         attributes: product.attributes
+      });
+    })
+    .catch(err => somethinError(res, err));
+});
+
+// @route  GET /api/admin/product/products/:id/images
+// @des    Get product images
+// @access Private
+router.get('/:id/images', [auth, admin], (req, res) => {
+  Product.findById(req.params.id)
+    .then(product => {
+      if (!product) return res.status(404).json({
+        success: false,
+        error: 'No data found!'
+      })
+      return res.json({
+        success: true,
+        images: product.images
       });
     })
     .catch(err => somethinError(res, err));
@@ -243,6 +258,7 @@ router.put('/:id', [auth, admin, multerParser.single('thumb')], (req, res) => {
     })
     .catch(err => somethinError(res, err));
 });
+
 // @route  DELETE /api/admin/product/products/:id
 // @des    Delete product by id
 // @access Private
@@ -360,6 +376,71 @@ router.delete('/:id/attributes/:attId', [auth, admin], (req, res) => {
         attributes: result.attributes
       }))
       .catch(err => somethinError(res, err));
+    })
+    .catch(err => somethinError(res, err));
+});
+
+// @route  POST /api/admin/product/products/:id/images
+// @des    Add product image
+// @access Private
+router.post('/:id/images', [auth, admin, multerParser.single('image')], (req, res) => {
+  // Check exist or not
+  Product.findById(req.params.id)
+    .then(product => {
+      if (!product) {
+        return res.status(404).json({
+          name: 'Product not found!'
+        })
+      } else {
+        // Set image data
+        if (req.file) {
+          product.images.push({
+            id: req.file.public_id,
+            url: req.file.url
+          })
+        };
+
+        // Update product image
+        product.save()
+          .then(result => res.status(200).json({
+            success: true,
+            images: result.images
+          }))
+          .catch(err => somethinError(res, err));
+      }
+    })
+    .catch(err => somethinError(res, err));
+});
+
+// @route  DELETE /api/admin/product/products/:id/images
+// @des    Delete product image
+// @access Private
+router.delete('/:id/images', [auth, admin], (req, res) => {
+  // Check exist or not
+  Product.findById(req.params.id)
+    .then(product => {
+      if (!product) {
+        return res.status(404).json({
+          name: 'Product not found!'
+        })
+      } else {
+        const deleteIndex = product.images.map(image => image.id).indexOf(req.body.imageId);
+        product.images.splice(deleteIndex, 1);
+
+         // Delete image from server
+         if(req.body.imageId){
+          const result = deleteServerImage(req.body.imageId);
+          if(result) console.log(result);
+        }
+
+        // Update product image
+        product.save()
+          .then(result => res.status(200).json({
+            success: true,
+            images: result.images
+          }))
+          .catch(err => somethinError(res, err));
+      }
     })
     .catch(err => somethinError(res, err));
 });

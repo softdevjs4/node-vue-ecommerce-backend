@@ -10,6 +10,7 @@ import ProductOption from '@/components/product/option/ProductOptionList'
 import ProductCreate from '@/components/product/product/ProductCreate'
 import ProductList from '@/components/product/product/ProductList'
 import ProductAttribute from '@/components/product/product/ProductAttribute'
+import ProductImage from '@/components/product/product/ProductImage'
 import HelloWorld from '@/components/HelloWorld'
 
 Vue.use(Router)
@@ -98,6 +99,15 @@ let router = new Router({
       path: '/products/attributes/:productId',
       name: 'productAttribute',
       component: ProductAttribute,
+      props: true,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/products/images/:productId',
+      name: 'productImage',
+      component: ProductImage,
       props: true,
       meta: {
         requiresAuth: true
