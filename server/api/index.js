@@ -5,6 +5,9 @@ const optionGroup = require('./routes/admin/product/optionGroup');
 const option = require('./routes/admin/product/option');
 const productMfr = require('./routes/admin/product/productManufacturer');
 const product = require('./routes/admin/product/product');
+// Client route data
+const clientProductCategory = require('./routes/client/product/category');
+const clientProductSubCategory = require('./routes/client/product/subCategory');
 
 module.exports = (app)=>{
   // All admin routes
@@ -22,4 +25,10 @@ module.exports = (app)=>{
   app.use('/api/admin/product/manufacturers', productMfr);
   // Product
   app.use('/api/admin/product/products', product);
+
+  // All client route
+  // Category
+  app.use('/api/product/categories', clientProductCategory);
+  // Sub category
+  app.use('/api/product/sub-categories', clientProductSubCategory);
 }
