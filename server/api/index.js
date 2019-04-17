@@ -8,6 +8,7 @@ const product = require('./routes/admin/product/product');
 // Client route data
 const clientProductCategory = require('./routes/client/product/category');
 const clientProductSubCategory = require('./routes/client/product/subCategory');
+const clientProduct = require('./routes/client/product/product');
 
 module.exports = (app)=>{
   // All admin routes
@@ -31,4 +32,6 @@ module.exports = (app)=>{
   app.use('/api/product/categories', clientProductCategory);
   // Sub category
   app.use('/api/product/sub-categories', clientProductSubCategory);
+  // Product
+  app.use('/api/product/products', clientProduct);
 }
