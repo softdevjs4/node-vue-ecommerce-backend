@@ -108,7 +108,7 @@ const actions = {
       fd.append('hasManufacturer', payload.hasManufacturer)
       fd.append('manufacturerId', payload.manufacturer._id)
       fd.append('manufacturerName', payload.manufacturer.name)
-      fd.append('manufacturerImage', payload.manufacturer.image.url)
+      fd.append('manufacturerImage', payload.manufacturer.image ? payload.manufacturer.image.url : '')
     }
     // Flash sale
     if (payload.isFlashSale) {

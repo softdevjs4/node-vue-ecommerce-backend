@@ -11,8 +11,8 @@ const app = express();
 
 // DB connection
 mongoose.connect(config.get('mongoURI'), { useNewUrlParser: true })
-  .then(() => dbDebugger('Connected to mongoDB'))
-  .catch(err => dbDebugger(err));
+  .then(() => console.log('Connected to mongoDB'))
+  .catch(err => console.log(err));
 
 // Load body parser
 app.use(bodyParser.json());
