@@ -8,5 +8,8 @@
     "cloud_name": "alphaecom",
     "api_key": "146341227726449",
     "api_secret": "iJNPtjRqsbZTsH_YK87V-Qf9chk"
+  },
+  "stripe": {
+    "secretKey": "sk_test_LJW4xs0DJs7SaxtDGbPhmhVC"
   }
 }

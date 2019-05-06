@@ -10,6 +10,7 @@ const clientAuth = require('./routes/client/auth');
 const clientProductCategory = require('./routes/client/product/category');
 const clientProductSubCategory = require('./routes/client/product/subCategory');
 const clientProduct = require('./routes/client/product/product');
+const order = require('./routes/client/order/order');
 
 module.exports = (app)=>{
   // All admin routes
@@ -37,4 +38,6 @@ module.exports = (app)=>{
   app.use('/api/product/sub-categories', clientProductSubCategory);
   // Product
   app.use('/api/product/products', clientProduct);
+  // order
+  app.use('/api/product/', order);
 }
