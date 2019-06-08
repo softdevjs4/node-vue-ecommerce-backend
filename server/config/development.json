@@ -1,5 +1,5 @@
 {
-  "mongoURI" : "mongodb://ecom123456:ecom123456@ds121026.mlab.com:21026/ecom",
+   "mongoURI" : "mongodb://ecom123456:ecom123456@ds121026.mlab.com:21026/ecom",
   "jwt": {
     "secretOrKey" : "secret",
     "tokenExpireIn" : 3600

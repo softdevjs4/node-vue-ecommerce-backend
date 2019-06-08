@@ -11,7 +11,6 @@ import ProductCreate from '@/components/product/product/ProductCreate'
 import ProductList from '@/components/product/product/ProductList'
 import ProductAttribute from '@/components/product/product/ProductAttribute'
 import ProductImage from '@/components/product/product/ProductImage'
-import HelloWorld from '@/components/HelloWorld'
 
 Vue.use(Router)
 
@@ -20,8 +19,11 @@ let router = new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'LoginUser',
+      component: LoginUser,
+      meta: {
+        guest: true
+      }
     },
     {
       path: '/login',

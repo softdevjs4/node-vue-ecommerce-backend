@@ -41,7 +41,7 @@ router.post('/checkout', (req, res) => {
 
     // Create the charge object with data from the Vue.js client
     var newCharge = {
-      amount: total,
+      amount: total*100,
       currency: "usd",
       source: req.body.stripeToken, // obtained with Stripe.js on the client side
     };

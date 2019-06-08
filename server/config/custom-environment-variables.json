@@ -1,5 +1,14 @@
 {
 	"mail" : {
 		"password" : "app_password"
-	}
+	},
+	"mongoURI" : "MONGO_URI",
+	"cloudinary": {
+    "cloud_name": "CLOUD_NAME",
+    "api_key": "CLOUD_API_KEY",
+    "api_secret": "CLOUD_API_SECRET"
+  },
+  "stripe": {
+    "secretKey": "STRIPE_KEY"
+  }
 }
